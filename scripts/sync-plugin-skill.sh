@@ -65,6 +65,18 @@ cp "$patterns_src" "$detector_patterns_dest"
 cp "$patterns_src" "$verifier_patterns_dest"
 cp "$validate_src" "$verifier_validate_dest"
 
+# Mirror the remaining public Skills into the Claude plugin so Claude Code
+# installs get the full set, not just the canonical avoid-ai-writing Skill.
+# Root skills/<name>/ stays the source of truth; agents/openai.yaml is
+# ChatGPT/Codex-only interface metadata and is dropped from the plugin copy.
+claude_skills_root="$repo_root/plugins/avoid-ai-writing/skills"
+for sub in avoid-ai-writing-router ai-writing-detector false-positive-reviewer \
+           file-edit-in-place preservation-verifier voice-preserving-rewriter; do
+  rm -rf "$claude_skills_root/$sub"
+  cp -R "$repo_root/skills/$sub" "$claude_skills_root/$sub"
+  rm -rf "$claude_skills_root/$sub/agents"
+done
+
 skill_version="$(sed -n '/^---[[:space:]]*$/,/^---[[:space:]]*$/ s/^version:[[:space:]]*//p' "$src" | head -n1 | tr -d '\r')"
 if [ -z "$skill_version" ]; then
   echo "could not parse 'version:' from SKILL.md frontmatter" >&2
@@ -107,4 +119,4 @@ if [ "$skill_version" != "$openai_version" ]; then
   exit 1
 fi
 
-echo "synced: canonical Skill + bundled commands/examples + detector + preservation resources + plugin versions ($skill_version)"
+echo "synced: canonical Skill + bundled commands/examples + detector + preservation resources + 6 mirrored sub-Skills + plugin versions ($skill_version)"

@@ -9,9 +9,9 @@
     {
       "name": "avoid-ai-writing",
       "source": "./plugins/avoid-ai-writing",
-      "description": "Audit & rewrite content to remove AI writing patterns (\"AI-isms\"). Supports detect-only and edit-in-place modes, voice profiles, and iterate-to-convergence.",
+      "description": "Audit & rewrite content to remove AI writing patterns (\"AI-isms\"). Bundles the full skill set: detect-only scanning, voice-preserving rewrite, in-place file editing, preservation verification, false-positive review, and a router that orchestrates them.",
       "category": "productivity",
-      "keywords": ["writing", "editing", "ai-detection", "humanize"]
+      "keywords": ["writing", "editing", "ai-detection", "humanize", "voice", "rewrite", "audit", "style"]
     }
   ]
 }

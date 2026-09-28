@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- The Claude Code plugin now bundles all seven public Skills (`avoid-ai-writing`, `avoid-ai-writing-router`, `ai-writing-detector`, `false-positive-reviewer`, `file-edit-in-place`, `preservation-verifier`, `voice-preserving-rewriter`) instead of only the canonical one. `scripts/sync-plugin-skill.sh` mirrors the six companion Skills from root `skills/` into `plugins/avoid-ai-writing/skills/`, dropping the ChatGPT/Codex-only `agents/openai.yaml` from each copy.
+
 ### Fixed
 
 - Cyrillic and Greek prose no longer reads as a homoglyph bypass. Script dominance is decided per sentence, and only mixed-script or fully substituted words surrounded by non-Russian text are swapped; limits are documented in `detector/patterns.js` (#352).
