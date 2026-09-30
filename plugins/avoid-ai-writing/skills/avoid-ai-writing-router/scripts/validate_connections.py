@@ -12,6 +12,8 @@ import json
 import sys
 from pathlib import Path
 
+# Fork-only: bundled in the plugin but not orchestrated by the router.
+STANDALONE_SKILLS = {"avoid-ai-writing-de"}
 ALLOWED_EDGE_TYPES = {"ROUTE", "FEED", "VERIFY", "REPAIR", "RECHECK", "ESCALATE"}
 SPECIALIZED = {
     "ai-writing-detector",
@@ -163,7 +165,7 @@ def main() -> int:
             p.name
             for p in skills_root.iterdir()
             if p.is_dir() and (p / "SKILL.md").is_file()
-        }
+        } - STANDALONE_SKILLS
     graph_nodes = set(nodes)
 
     missing_dirs = sorted(graph_nodes - skill_dirs)

@@ -1,0 +1,3 @@
+Upstream: https://github.com/jurigis/avoid-ai-writing-multilingual (SKILL-DE.md, MIT)
+Commit:   4e5aa4c
+Refresh:  copy SKILL-DE.md from the new commit to SKILL.md here, update the commit above, run scripts/sync-plugin-skill.sh

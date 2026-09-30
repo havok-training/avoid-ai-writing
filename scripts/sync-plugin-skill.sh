@@ -77,6 +77,16 @@ for sub in avoid-ai-writing-router ai-writing-detector false-positive-reviewer \
   rm -rf "$claude_skills_root/$sub/agents"
 done
 
+# Fork-only: vendored third-party German adaptation (see vendor/avoid-ai-writing-de/SOURCE).
+de_src="$repo_root/vendor/avoid-ai-writing-de"
+if [ ! -f "$de_src/SKILL.md" ] || [ ! -f "$de_src/LICENSE" ]; then
+  echo "missing vendored source: $de_src" >&2
+  exit 1
+fi
+rm -rf "$claude_skills_root/avoid-ai-writing-de"
+mkdir -p "$claude_skills_root/avoid-ai-writing-de"
+cp "$de_src/SKILL.md" "$de_src/LICENSE" "$claude_skills_root/avoid-ai-writing-de/"
+
 skill_version="$(sed -n '/^---[[:space:]]*$/,/^---[[:space:]]*$/ s/^version:[[:space:]]*//p' "$src" | head -n1 | tr -d '\r')"
 if [ -z "$skill_version" ]; then
   echo "could not parse 'version:' from SKILL.md frontmatter" >&2
@@ -119,4 +129,4 @@ if [ "$skill_version" != "$openai_version" ]; then
   exit 1
 fi
 
-echo "synced: canonical Skill + bundled commands/examples + detector + preservation resources + 6 mirrored sub-Skills + plugin versions ($skill_version)"
+echo "synced: canonical Skill + bundled commands/examples + detector + preservation resources + 6 mirrored sub-Skills + vendored German Skill + plugin versions ($skill_version)"
